@@ -1,0 +1,67 @@
+﻿body:not(.toolbar) {
+  padding-top: 35px !important;
+}
+
+@media print {
+  .olckb-toolbar {
+    display: none;
+  }
+}
+
+.olckb-toolbar .widget .group {
+  display: inline-block;
+  margin-right: .25em;
+  margin-bottom: .25em;
+  padding: 2px;
+}
+
+.olckb-toolbar .widget .button {
+  display: inline-block;
+  cursor: pointer;
+  margin: 0;
+  margin-right: .25em;
+  padding: 3px 6px;
+  line-height: 1em;
+}
+
+.region-page-top .olckb-toolbar {
+  position: fixed;
+  z-index: 600;
+  margin-top: -35px;
+  width: 100%;
+  overflow: hidden;
+  /**
+         * For horizontal scrolling...
+         * See: http://css-tricks.com/how-to-create-a-horizontally-scrolling-site/ 
+         */
+}
+
+.region-page-top .olckb-toolbar .widget {
+  margin: 0 auto;
+  width: 960px;
+  height: 35px;
+  /*padding-top: 2px;*/
+}
+
+.region-page-top .olckb-toolbar .widget a.button {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  padding: 4px 2px;
+  vertical-align: top;
+  font-size: 24px;
+}
+
+.region-page-top .olckb-toolbar .widget .group {
+  margin: 0;
+  margin-right: 4px;
+  border: none;
+  padding: 0;
+  vertical-align: top;
+}
+
+.region-page-top .olckb-toolbar .widget .group:first-child {
+  margin-left: 21px;
+}
+
+/*# sourceMappingURL=olckb.css.map */

@@ -1,0 +1,4 @@
+package = .OLC
+name = OLC Keyboard
+description = Keyboard assistance
+core = 7.x

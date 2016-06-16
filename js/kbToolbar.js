@@ -3,11 +3,27 @@
 // 
 // <div class="mytoolbar">
 //   <div class="content"></div>
-//   <script class="button-template" type="text/x-template">
-//     <span title="@REPLACE">@DISPLAY</span>
+//   <script class="tool-character-group-template" type="text/x-template">
+//     ...
+//   </script>
+//   <script class="tool-character-group-character-template" type="text/x-template">
+//     ...
 //   </script>
 //   <script class="data" type="text/javascript">
-//     kbChars = [{"title":"Upper case","characters":["\u00c1","A\u019e","C\u0304","\u010a","\u00c9","\u0120","\u1e22","\u00cd","I\u019e","K\u0304","K\u0307","\u00d3","P\u0304","\u1e56","\u1e60","T\u0304","\u1e6a","\u00da","U\u019e"]},{"title":"Lower case","characters":["\u00e1","a\u019e","c\u0304","\u010b","\u00e9","\u0121","\u1e23","\u00ed","i\u019e","k\u0304","k\u0307","\u00f3","p\u0304","\u1e57","\u1e61","t\u0304","\u1e6b","\u00fa","u\u019e"]}];
+//     kbChars = [
+//       {
+//         "type":"Characters",
+//         "characters":[
+//           "\u00c1","A\u019e","C\u0304"
+//         ]
+//       },
+//       {
+//         "type":"Divider"
+//       },
+//       {
+//         "type":"LineBreak"
+//       }
+//    ];
 //   </script>
 // </div>
 //
@@ -30,19 +46,19 @@ function kbToolbar(selector, data) {
       return selector + ' .widget';
       
     }
-    function _prepareButtonGroupTemplateSelector() {
+    function _prepareCharacterGroupTemplateSelector() {
       
-      return selector + ' .group-template';
-      
-    }
-    function _prepareButtonTemplateSelector() {
-      
-      return selector + ' .button-template';
+      return selector + ' .tool-character-group-template';
       
     }
-    function _prepareButtonSelector() {
+    function _prepareCharacterTemplateSelector() {
       
-      return _prepareContentSelector() + ' .button';
+      return selector + ' .tool-character-group-character-template';
+      
+    }
+    function _prepareCharacterSelector() {
+      
+      return _prepareContentSelector() + ' .character';
       
     }
     function _getTemplate(selector) {
@@ -140,33 +156,83 @@ function kbToolbar(selector, data) {
       }
       
     }
-    
+   
     function buildToolbar() {
 
-      for (buttonGroupIndex in data) {
-        var toolbarGroup = data[buttonGroupIndex];
-        
-        // Get button group template
-        var buttonGroupTemplate = _getTemplate(_prepareButtonGroupTemplateSelector());
-        
-        for (charIndex in toolbarGroup['characters']) {
-          var ch = toolbarGroup['characters'][charIndex];
-  
-          // Prepare button for toolbar
-          var buttonTemplate = _getTemplate(_prepareButtonTemplateSelector());
-          $(buttonTemplate).attr('title', ch);
-          $(buttonTemplate).html(ch);
-          
-          // Place button in group
-          $(buttonGroupTemplate).append(buttonTemplate);
-          
+      var parent = $(_prepareContentSelector());
+
+      for (toolIndex in data) {
+
+        var tool = data[toolIndex];
+        tool.type = 'type' in tool ? tool.type : 'CharacterGroup';
+        tool.content = '';
+
+        switch(tool.type) {
+
+          case 'CharacterGroup':
+            buildToolContent_CharacterGroup(tool);
+            break;
+
+          case 'Divider':
+            buildToolContent_Divider(tool);
+            break;
+
+          case 'LineBreak':
+            buildToolContent_LineBreak(tool);
+            break;
+
+          default:
+            break;
+
+        }
+
+        parent.append(tool.content);
+
+      }
+
+      function buildToolContent_CharacterGroup(tool) {
+
+        // Get character group template
+        var characterGroupTemplate = _getTemplate(_prepareCharacterGroupTemplateSelector());
+
+        for (charIndex in tool['characters']) {
+
+          var ch = tool['characters'][charIndex];
+
+          // Prepare character for character group
+          var characterTemplate = _getTemplate(_prepareCharacterTemplateSelector());
+          $(characterTemplate).attr('title', ch);
+          $(characterTemplate).html(ch);
+
+          // Place character in group
+          $(characterGroupTemplate).append(characterTemplate);
+
         }
         
-        // Place button group in toolbar
-        $(_prepareContentSelector()).append(buttonGroupTemplate);
-        
+        // Add classes
+        if ('classes' in tool) {
+
+          $(characterGroupTemplate).addClass(tool.classes.join(' '));
+
+        }
+        else {
+          // pass
+        }
+
+        tool.content = characterGroupTemplate;
+
       }
-      
+      function buildToolContent_Divider(tool) {
+
+        tool.content = '<span class="divider"></span>';
+
+      }
+      function buildToolContent_LineBreak(tool) {
+
+        tool.content = '<br />';
+
+      }
+
     }
     function rememberLastFocused() {
 
@@ -197,9 +263,9 @@ function kbToolbar(selector, data) {
       }
       
     }
-    function handleToolbarButtonClicks() {
+    function toolbarCharacterGroupCharacter__handleClick() {
   
-      $(_prepareButtonSelector()).click(function(){
+      $(_prepareCharacterSelector()).click(function(){
         
         var insertThis = $(this).attr('title');
         
@@ -234,9 +300,11 @@ function kbToolbar(selector, data) {
     }
     
     buildToolbar();
+
     rememberLastFocused();
     rememberLastFocusedRange();
-    handleToolbarButtonClicks();
+
+    toolbarCharacterGroupCharacter__handleClick();
 
   });
   

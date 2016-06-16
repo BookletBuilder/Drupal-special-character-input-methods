@@ -1,0 +1,41 @@
+﻿
+/* Header */
+/* Main */
+/* Button - Dark */
+/* Button - Medium */
+/* Button - Light */
+
+.olckb-toolbar .widget .tool {
+  border-color: black;
+}
+
+.region-page-top .olckb-toolbar {
+
+  /* Same as header */
+  background-color: rgb(62,62,120);
+
+}
+
+.region-page-top .olckb-toolbar .widget {
+
+  /* Same as header */
+  background-color: #607267;
+
+}
+
+.region-page-top .olckb-toolbar .widget .tool.character-group a.character {
+
+  /* Button color */
+  background: rgba(255,255,255,.4);
+  color: black;
+
+}
+
+.region-page-top .olckb-toolbar .widget .tool.character-group a.character:hover {
+
+  /* Highlighted button color */
+  background: white;
+  color: black;
+
+}
+

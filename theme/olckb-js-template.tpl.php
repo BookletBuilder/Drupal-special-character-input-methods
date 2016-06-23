@@ -23,7 +23,7 @@
   <script type="text/javascript">
     
     // Provision toolbar data
-    toolbarData = <?php echo json_encode($olckb_chars) ?>;
+    toolbarData = <?php echo json_encode($olckb_chars, JSON_UNESCAPED_UNICODE) ?>;
 
     // Initialize the toolbar javascript; pass in selector and toolbar data
     kbToolbar('.olckb-toolbar', toolbarData);

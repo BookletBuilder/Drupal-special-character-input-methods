@@ -41,7 +41,9 @@ function olckb_block_info() {
 }
 
 function olckb_block_configure($block_name = '') {
+
   return array();
+
 }
 
 function olctkb_block_save($block_name = '', $values = array()) {
@@ -104,15 +106,26 @@ function _olckb_chars() {
 
       foreach ($kb_item['characters'] as $char_index => $char) {
 
-        if (!Normalizer::isNormalized($char)) {
+        $char_normalized = null;
+        switch (gettype($char)) {
+          case 'array':
+            
+            $olckb_characters[$kb_index]['characters'][$char_index]['show'] = _olckb_normalize($char['show']);
+            $olckb_characters[$kb_index]['characters'][$char_index]['insert'] = _olckb_normalize($char['insert']);
 
-          $olckb_characters[$kb_index]['characters'][$char_index] 
-            = Normalizer::normalize( Normalizer::FORM_KC);
+            break;
+          case 'string':
 
+            $olckb_characters[$kb_index]['characters'][$char_index] = _olckb_normalize($char);
+
+            break;
+          default:
+
+            // pass
+
+            break;
         }
-        else {
-          // Skip; already normalized
-        }
+        
 
       }
 
@@ -127,4 +140,12 @@ function _olckb_chars() {
 
 }
 
+function _olckb_normalize($value) {
+
+  return ! Normalizer::isNormalized($value)
+         ? Normalizer::normalize($value, Normalizer::FORM_KC)
+         : $value
+         ;
+
+}
 

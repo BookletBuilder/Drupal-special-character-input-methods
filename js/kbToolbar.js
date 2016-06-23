@@ -198,16 +198,43 @@ function kbToolbar(selector, data) {
         for (charIndex in tool['characters']) {
 
           var ch = tool['characters'][charIndex];
+          var ch_show = null;
+          var ch_insert = null;
+          var ch_classes = null;
+          if (typeof ch === 'string') {
+
+            ch_show = ch;
+            ch_insert = ch;
+            ch_classes = [];
+
+          }
+          else {
+
+            ch_show = ch.show;
+            ch_insert = ch.insert;
+
+            ch_classes = 'classes' in ch 
+                       ? ch.classes 
+                       : []
+                       ;
+
+          }
 
           // Prepare character for character group
           var characterTemplate = _getTemplate(_prepareCharacterTemplateSelector());
-          $(characterTemplate).attr('title', ch);
-          $(characterTemplate).html(ch);
+          $(characterTemplate).attr('title', ch_show);
+          $(characterTemplate).attr('insert', ch_insert);
+          for (classIndex in ch_classes) {
+
+            $(characterTemplate).addClass(ch_classes[classIndex]);
+
+          }
+          $(characterTemplate).html(ch_show);
 
           // Place character in group
           $(characterGroupTemplate).append(characterTemplate);
 
-        }
+        } // end-for
         
         // Add classes
         if ('classes' in tool) {
@@ -267,7 +294,7 @@ function kbToolbar(selector, data) {
   
       $(_prepareCharacterSelector()).click(function(){
         
-        var insertThis = $(this).attr('title');
+        var insertThis = $(this).attr('insert');
         
         var insertionPointFound = kbLastFocused != undefined;
         if (insertionPointFound) {

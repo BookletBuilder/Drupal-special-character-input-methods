@@ -143,7 +143,7 @@ function _olckb_chars() {
 function _olckb_normalize($value) {
 
   return ! Normalizer::isNormalized($value)
-         ? Normalizer::normalize($value, Normalizer::FORM_KC)
+         ? Normalizer::normalize($value, Normalizer::FORM_C)
          : $value
          ;
 

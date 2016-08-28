@@ -73,13 +73,27 @@ function _olckb_block_toolbar_view() {
 }
 
 function olckb_page_build(&$page) {
-  include drupal_get_path('module', 'olckb') . '/olckb_data.php';
-  $page['page_top']['olckb'] = array(
-    '#markup' => theme(
-      'olckb_js_template', 
-      array('olckb_chars' => _olckb_chars())
-    ),
-  );
+
+  $kb_data_path = drupal_get_path('module', 'olckb') . '/olckb_data.php';
+
+  if (file_exists($kb_data_path)) {
+
+    include $kb_data_path;
+
+    $page['page_top']['olckb'] = array(
+      '#markup' => theme(
+        'olckb_js_template', 
+        array('olckb_chars' => _olckb_chars())
+      ),
+    );
+
+  }
+  else {
+
+    drupal_set_message('Missing "olckb_data.php"', 'warning');
+
+  }
+
 }
 
 function _olckb_chars() {

@@ -1,8 +1,10 @@
 ﻿
-@import url(olckb-color.css);
-
 body:not(.toolbar) {
-  padding-top: 56px !important;
+
+  /* Spacing top of toolbar */
+  /* TODO: Handle this with javascript */
+  padding-top: 35px !important;
+
 }
 
 @media print {
@@ -11,11 +13,19 @@ body:not(.toolbar) {
   }
 }
 
+/**
+ * Generic
+ */
+
 .olckb-toolbar .widget .tool {
   display: inline-block;
   margin: 0 .25em .25em 0;
   padding: 2px;
   border-style: none;
+
+  /* Color: border */
+  border-color: black;
+
 }
 
 .olckb-toolbar .widget .tool.character-group  > a.character {
@@ -30,24 +40,45 @@ body:not(.toolbar) {
   text-decoration: none;
 }
 
+/**
+ * Along top of page
+ */
+
 .region-page-top .olckb-toolbar {
+  
+  /* Toolbar */
+
   position: fixed;
   z-index: 600;
-  margin-top: -56px;
   width: 100%;
   overflow: hidden;
   /**
    * For horizontal scrolling...
    * See: http://css-tricks.com/how-to-create-a-horizontally-scrolling-site/ 
    */
+
+  /* Spacing top of toolbar */
+  margin-top: -35px;
+
+  /* Color */
+  background-color: black; /* Typically, same as header */
+
 }
 
 .region-page-top .olckb-toolbar .widget {
+
+  /* Toolbar widget */
+
   box-sizing: border-box;
   margin: 0 auto;
   padding: 0 16px;
   width: 960px;
-  height: 56px;
+  
+  /* Spacing top of toolbar */
+  height: 35px;
+
+  /* Color */
+  background-color: black; /* Typically, same as header */
 }
 
 .region-page-top .olckb-toolbar .widget .tool {
@@ -59,22 +90,35 @@ body:not(.toolbar) {
 
 .region-page-top .olckb-toolbar .widget .tool.character-group > a.character {
 
+  /* Character button */
+
   margin: 0;
   border: none;
   border-radius: 0;
-  width: 22px;
-  padding: 2px 0 2px 0;
+  padding: 2px 5px 2px 5px;
 
   vertical-align: top;
   text-align: center;
   white-space: nowrap;
   font-size: 22px;
 
+  /* Color: button */
+  background: rgba(255,255,255,.4); /* White background, 40% alpha */
+  color: black;
+
+}
+.region-page-top .olckb-toolbar .widget .tool.character-group > a.character:hover {
+
+  /* Character button (hovered) */
+
+  text-decoration: none;
+
+  /* Color */
+  background: white;
+  color: black;
+
 }
 .region-page-top .olckb-toolbar .widget .tool.character-group.modifier-letters > a.character {
   width: 14px;
-}
-.region-page-top .olckb-toolbar .widget .tool.character-group > a.character:hover {
-  text-decoration: none;
 }
 

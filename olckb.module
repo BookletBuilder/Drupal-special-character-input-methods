@@ -1,16 +1,20 @@
 <?php
 
+/**
+ * HOOK_theme
+ * Themeing for JS-based toolbar
+ */
 function olckb_theme ($existing, $type, $theme, $path) {
  
   $path = drupal_get_path('module', 'olckb');
 
-  $theme_base = array(
+  $module_theme_base = array(
     'path' => $path . '/theme',
   );
  
   return array(
 
-    'olckb_js_template' => $theme_base + array(
+    'olckb_js_template' => $module_theme_base + array(
       'variables' => array('olckb_chars' => NULL),
       'template' => 'olckb-js-template',
     ),
@@ -20,7 +24,10 @@ function olckb_theme ($existing, $type, $theme, $path) {
 }
 
 
-// block
+/**
+ * HOOK_block_info
+ * (Not used, but developing in case it will be at some point.)
+ */
 function olckb_block_info() {
 
   // Default block settings
@@ -39,16 +46,13 @@ function olckb_block_info() {
   return $blocks;
   
 }
-
 function olckb_block_configure($block_name = '') {
 
   return array();
 
 }
-
 function olctkb_block_save($block_name = '', $values = array()) {
 }
-
 function olckb_block_view($block_name = '') {
   switch ($block_name) {
     case 'olckb_toolbar':
@@ -61,6 +65,9 @@ function olckb_block_view($block_name = '') {
   }
 }
 
+
+
+
 function _olckb_block_toolbar_view() {
   return array(
     'subject' => 'Textbook options',
@@ -72,11 +79,55 @@ function _olckb_block_toolbar_view() {
   );
 }
 
+
+
+function _olckb_build_module_path($file) {
+
+  $path = drupal_get_path('module', 'olckb');
+
+  return "$path/$file";
+
+}
+function _olckb_build_settings_path($file) {
+
+  $path = conf_path() . '/settings/olckb';
+
+  return "$path/$file";
+
+}
+function _olckb_get_settings_file($file) {
+
+  // TODO: Cache candidate values AND result
+
+  $result = NULL;
+
+  $candidates = array(
+    _olckb_build_settings_path($file),
+    _olckb_build_module_path($file)
+  );
+
+  foreach ($candidates as $candidate) {
+
+    if (file_exists($candidate)) {
+
+      $result = $candidate;
+      break;
+
+    }
+    else {
+      // pass
+    }
+
+  }
+
+  return $result;
+
+}
+
 function olckb_page_build(&$page) {
 
-  $kb_data_path = drupal_get_path('module', 'olckb') . '/olckb_data.php';
-
-  if (file_exists($kb_data_path)) {
+  $kb_data_path = _olckb_get_settings_file('olckb_data.php');
+  if (!is_null($kb_data_path)) {
 
     include $kb_data_path;
 
@@ -98,7 +149,8 @@ function olckb_page_build(&$page) {
 
 function _olckb_chars() {
 
-  include drupal_get_path('module', 'olckb') . '/olckb_data.php';
+  $kb_data_path = _olckb_get_settings_file('olckb_data.php');
+  include $kb_data_path;
 
   // Provision "type" key
   foreach ($olckb_characters as $kb_index => $kb_item) {

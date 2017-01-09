@@ -37,7 +37,6 @@ function kbToolbar(selector, data) {
     
     function _detectDocumentSelection() {
     
-      //console.log(document.selection);  
       return typeof document.selection !== 'undefined';
     
     }    
@@ -325,12 +324,72 @@ function kbToolbar(selector, data) {
       });
       
     }
+
+    function adminToolbar_selector() {
+
+      return '#admin-menu';
+
+    }
+    function adminToolbar_elements() {
+
+      return $(adminToolbar_selector());
+
+    }
+    function adminToolbar_isActive() {
+
+      return adminToolbar_elements().length > 0;
+
+    }
+    function adminToolbar_height() {
+
+      return adminToolbar_elements().height();
+
+    }
+
+    function olcKb_selector() {
+
+      return '.olckb-toolbar';
+
+    }
+    function olcKb_elements() {
+
+      return $(olcKb_selector());
+
+    }
+    function olcKb_height() {
+
+      return olcKb_elements().height();
+
+    }
+
+    function positionToolbar() {
+
+      function callback() {
+
+        var translateY = 0;
+        translateY += adminToolbar_isActive() ? adminToolbar_height() : 0;
+
+        var height = olcKb_height();
+
+        // Padding-top is olcKb_getHeight();
+        // Y-translation is adjustment
+
+        console.log('position toolbar', translateY, height);
+        $('body').css('padding-top', height);
+        $(olcKb_elements().css('top', translateY));
+
+      }
+
+      callback();
+      $(document).load(callback);
+      $(window).resize(callback);
+
+    }
     
     buildToolbar();
-
+    positionToolbar();
     rememberLastFocused();
     rememberLastFocusedRange();
-
     toolbarCharacterGroupCharacter__handleClick();
 
   });

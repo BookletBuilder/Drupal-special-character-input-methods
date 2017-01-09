@@ -3,7 +3,6 @@
   $path = drupal_get_path('module', 'olckb');
   drupal_add_js($path . '/js/kbToolbar.js');
   drupal_add_css($path . '/olckb.css');
-  drupal_add_css($path . '/olckb-custom.css');
   
 ?>
 
@@ -31,8 +30,11 @@
 
     // Make adjusment to Drupal toolbar to make room for character toolbar
     (function ($) {
+
       if (Drupal.toolbar != undefined) {
         Drupal.toolbar.height = function() {
+
+          console.log('Drupal.toolbar.height');
 
           //
           // Overriding Drupal's TOOLBAR function that calculates height
@@ -49,8 +51,8 @@
           }
 
           // Make height adjustment
-          var extraHeight = 32; // TODO: Calculate actual height
-          height += extraHeight;
+          //var extraHeight = 32; // TODO: Calculate actual height
+          //height += extraHeight;
           
           return height;
         

@@ -79,54 +79,9 @@ function _olckb_block_toolbar_view() {
   );
 }
 
-
-
-function _olckb_build_module_path($file) {
-
-  $path = drupal_get_path('module', 'olckb');
-
-  return "$path/$file";
-
-}
-function _olckb_build_settings_path($file) {
-
-  $path = conf_path() . '/settings/olckb';
-
-  return "$path/$file";
-
-}
-function _olckb_get_settings_file($file) {
-
-  // TODO: Cache candidate values AND result
-
-  $result = NULL;
-
-  $candidates = array(
-    _olckb_build_settings_path($file),
-    _olckb_build_module_path($file)
-  );
-
-  foreach ($candidates as $candidate) {
-
-    if (file_exists($candidate)) {
-
-      $result = $candidate;
-      break;
-
-    }
-    else {
-      // pass
-    }
-
-  }
-
-  return $result;
-
-}
-
 function olckb_page_build(&$page) {
 
-  $kb_data_path = _olckb_get_settings_file('olckb_data.php');
+  $kb_data_path = olccommon_get_settings_file('olckb', 'olckb_characters.php');
   if (!is_null($kb_data_path)) {
 
     include $kb_data_path;
@@ -149,7 +104,7 @@ function olckb_page_build(&$page) {
 
 function _olckb_chars() {
 
-  $kb_data_path = _olckb_get_settings_file('olckb_data.php');
+  $kb_data_path = olccommon_get_settings_file('olckb', 'olckb_data.php');
   include $kb_data_path;
 
   // Provision "type" key

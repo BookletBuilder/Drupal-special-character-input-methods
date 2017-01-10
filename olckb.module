@@ -104,7 +104,7 @@ function olckb_page_build(&$page) {
 
 function _olckb_chars() {
 
-  $kb_data_path = olccommon_get_settings_file('olckb', 'olckb_data.php');
+  $kb_data_path = olccommon_get_settings_file('olckb', 'olckb_characters.php');
   include $kb_data_path;
 
   // Provision "type" key

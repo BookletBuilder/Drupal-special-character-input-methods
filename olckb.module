@@ -96,7 +96,7 @@ function olckb_page_build(&$page) {
   }
   else {
 
-    drupal_set_message('Missing "olckb_data.php"', 'warning');
+    drupal_set_message('Missing "olckb_characters.php"', 'warning');
 
   }
 

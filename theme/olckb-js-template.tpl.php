@@ -1,8 +1,9 @@
 <?php
 
   $path = drupal_get_path('module', 'olckb');
-  drupal_add_js($path . '/js/kbToolbar.js');
-  drupal_add_css($path . '/olckb.css');
+
+  drupal_add_js  ($path . '/js/kbToolbar.js');
+  drupal_add_css ($path . '/olckb.css');
   
 ?>
 

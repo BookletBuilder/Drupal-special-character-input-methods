@@ -3,5 +3,9 @@ name = OLC Keyboard
 description = Keyboard assistance
 core = 7.x
 
-dependencies []= olccommon
+dependencies[] = olccommon
+
+stylesheets[all][] = olckb-default.css
+
+scripts[] = js/kbToolbar.js
 

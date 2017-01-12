@@ -5,7 +5,7 @@ core = 7.x
 
 dependencies[] = olccommon
 
-stylesheets[all][] = olckb-default.css
+stylesheets[all][] = olckb.css
 
 scripts[] = js/kbToolbar.js
 
